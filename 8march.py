@@ -280,13 +280,24 @@ def calculator_to_ViS():
                 for i in numbers:
                     c5 = n.count(i)
                     counter.append(c5)
-                print('Число:             Сколько раз встречается:')
+                to_output2.append('Число:             Сколько раз встречается:')
                 for i in range(len(counter)):
-                    print(numbers[i].ljust(10), '='.ljust(10), counter[i])
+                    to6 = str(numbers[i].ljust(10)) + '='.ljust(10) + str(counter[i])
+                    to_output2.append(to6)
+                window = answer(to_output2)
             if c == 6:
                 n = n.split()
                 m = sort_list(n)
-                print('Упорядоченный ряд: ', *n, ' = ', *m)
+                to5 = 'Упорядоченный ряд: '
+                for i in n:
+                    to5 += str(i)
+                    to5 += ' '
+                to5 += '= '
+                for i in m:
+                    to5 += str(i)
+                    to5 += ' '
+                to_output2.append(to5)
+                window = answer(to_output2)
             if c == 7:
                 qw = n.split()
                 b = qw[:]
@@ -527,42 +538,36 @@ def calculator_to_ViS():
     def MODA():
         global c
         c = 4
-        print(c)
         work_with_list()
         return window
 
     def counter_of_digits():
         global c
         c = 5
-        print(c)
         work_with_list()
         return window
 
     def sort_list():
         global c
         c = 6
-        print(c)
         work_with_list()
         return window
 
     def MED():
         global c
         c = 7
-        print(c)
         work_with_list()
         return window
 
     def average_arithmetic():
         global c
         c = 8
-        print(c)
         work_with_list()
         return window
 
     def SCOPE():
         global c
         c = 9
-        print(c)
         work_with_list()
         return window
 
