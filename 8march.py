@@ -124,7 +124,7 @@ def calculator_to_ViS():
             n = int(name1.get())
             if c == 1:
                 need3 = factorial(n) / (factorial(n - k) * factorial(k))
-                output1 = ''
+                output1 = output2 = ''
                 myset1 = set()
                 myset2 = set()
                 for f in range(1, n + 1):
@@ -155,19 +155,19 @@ def calculator_to_ViS():
                     b += '*'
                 b = b[:-1]
                 output3 = output3[:-1]
-                output2 = ''
-                output2 += '-' * (len(output1) + len(output3) // 2)
+                output2 += '—' * (len(list(output1)) // 2 + (len(str(n)) * len(str(k))))
                 output2 += ' = '
-                output1 += ' ' * 3
-                output3 += ' ' * (len(output2) - len(output3))
+                output1 += ' ' * 5
                 output1 += a
-                output2 += '--' * (len(a) + len(b) // 2)
+                output2 += '—' * (max(len(a), len(b)) // 2 + 5)
+                output3 += ' ' * (len(output2) - len(output3))
                 output2 += ' = '
                 output2 += str(need3)
                 if len(b) > 1:
                     output3 += b
                 else:
-                    output3 += ' ' * (len(a) // 2)
+                    output3 += ' ' * (len(output2) - len(output3))
+                    output3 += ' ' * (len(a))
                     output3 += '1'
                     output3 += ' ' * (len(a) // 2)
                 output1 += ' ' * (len(output2) - len(output1))
@@ -386,9 +386,16 @@ def calculator_to_ViS():
                 n = n.split()
                 numbers = sort_list(n)
                 if len(numbers) > 1:
-                    c2 = max(numbers)
-                    v = min(numbers)
-                    to = 'Размах: ' + str(c2 - v)
+                    to = 'Размах: '
+                    for i in numbers:
+                        to += str(i)
+                        to += ' '
+                    to += '= '
+                    to += str(max(numbers))
+                    to += ' - '
+                    to += str(min(numbers))
+                    to += ' = '
+                    to += str(max(numbers) - min(numbers))
                     to_output2.append(to)
                 else:
                     to_output2.append('Вы ввели одно число!')
