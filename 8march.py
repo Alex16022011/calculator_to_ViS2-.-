@@ -290,9 +290,7 @@ def calculator_to_ViS():
             if c == 7:
                 qw = n.split()
                 b = qw[:]
-                print(b)
                 dek = sort_list(b)
-                print(b)
                 b = dek.copy()
                 if len(b) % 2 == 0:
                     b = dek[:]
@@ -324,42 +322,66 @@ def calculator_to_ViS():
                     second += str(c8 / 2)
                     first += ' ' * (len(second) - len(first))
                     third += ' ' * (len(second) - len(third))
-                    print(first, second, third, sep='\n')
-                else:
+                    to_output2.append(first)
+                    to_output2.append(second)
+                    to_output2.append(third)
+                elif len(b) % 2 == 1 and len(b) > 2:
                     while len(b) != 1:
                         del b[0]
                         del b[-1]
                     q8 = sorted(qw)
-                    print(f'Медиана списка  = ', *qw, ' = ', *q8, ' = ', b[0])
+                    to3 = 'Медиана списка = '
+                    for i in qw:
+                        to3 += str(i)
+                        to3 += ' '
+
+                    to3 += '= '
+                    for i in q8:
+                        to3 += str(i)
+                        to3 += ' '
+
+                    to3 += '= '
+                    to3 += str(b[0])
+                    to_output2.append(to3)
+                elif len(b) == 1:
+                    to4 = 'Медиана списка  = ' + str(b[0])
+                    to_output2.append(to4)
+                else:
+                    to_output2.append('Медианы нет! Введите еще одно число!')
+                window = answer(to_output2)
             if c == 8:
                 n = n.split()
                 n = sort_list(n)
                 numbers2 = n
                 first = second = third = ''
                 second += 'Среднее арифметическое ряда = '
-                first = third = ' ' * 29
-                w = '-' * max(len(str(sum(numbers2))), len(str(len(numbers2))))
+                first = third = '  ' * 26
+                w = '--' * max(len(str(sum(numbers2))), len(str(len(numbers2))))
                 second += str(w)
                 first += ' '
-                third += ' ' * (len(w) // 2 + 1)
+                third += ' ' * (len(w) // 2)
                 first += str(sum(numbers2))
                 third += str(len(numbers2))
                 second += ' = '
                 second += str(sum(numbers2) / len(numbers2))
+                second += ' '
                 first += ' ' * (len(second) - len(first))
                 third += ' ' * (len(second) - len(third))
-                print(first, second, third, sep='\n')
+                to_output2.append(first)
+                to_output2.append(second)
+                to_output2.append(third)
+                window = answer(to_output2)
             if c == 9:
-                numbers = []
                 n = n.split()
-                for e in n:
-                    numbers.append(int(e))
+                numbers = sort_list(n)
                 if len(numbers) > 1:
                     c2 = max(numbers)
                     v = min(numbers)
-                    print(f'Размах: {c2 - v}')
+                    to = 'Размах: ' + str(c2 - v)
+                    to_output2.append(to)
                 else:
-                    print('Размах: ', *numbers)
+                    to_output2.append('Вы ввели одно число!')
+                window = answer(to_output2)
         delete_from_screen_ViS_when_you_tap_answer()
 
     def new_button():
