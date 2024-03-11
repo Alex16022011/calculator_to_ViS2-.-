@@ -2,8 +2,13 @@ from tkinter import *
 
 from tkinter import ttk
 
-
 from math import *
+
+def clear_search(event):
+   name.delete(0, END)
+
+def clear_search2(event):
+   name1.delete(0, END)
 
 to_delete_from_first_screen = []
 to_delete_from_screen_ViS_when_you_tap_the_button = []
@@ -125,7 +130,7 @@ def calculator_to_ViS():
             n = int(name1.get())
             if c == 1:
                 need3 = factorial(n) / (factorial(n - k) * factorial(k))
-                output1 = ''
+                output1 = output2 = ''
                 myset1 = set()
                 myset2 = set()
                 for f in range(1, n + 1):
@@ -156,19 +161,19 @@ def calculator_to_ViS():
                     b += '*'
                 b = b[:-1]
                 output3 = output3[:-1]
-                output2 = ''
-                output2 += '-' * (len(output1) + len(output3) // 2)
+                output2 += '—' * (len(list(output1)) // 2 + (len(str(n)) * len(str(k))))
                 output2 += ' = '
-                output1 += ' ' * 3
-                output3 += ' ' * (len(output2) - len(output3))
+                output1 += ' ' * 5
                 output1 += a
-                output2 += '--' * (len(a) + len(b) // 2)
+                output2 += '—' * (max(len(a), len(b)) // 2 + 5)
+                output3 += ' ' * (len(output2) - len(output3))
                 output2 += ' = '
                 output2 += str(need3)
                 if len(b) > 1:
                     output3 += b
                 else:
-                    output3 += ' ' * (len(a) // 2)
+                    output3 += ' ' * (len(output2) - len(output3))
+                    output3 += ' ' * (len(a))
                     output3 += '1'
                     output3 += ' ' * (len(a) // 2)
                 output1 += ' ' * (len(output2) - len(output1))
@@ -281,19 +286,28 @@ def calculator_to_ViS():
                 for i in numbers:
                     c5 = n.count(i)
                     counter.append(c5)
-                print('Число:             Сколько раз встречается:')
+                to_output2.append('Число:             Сколько раз встречается:')
                 for i in range(len(counter)):
-                    print(numbers[i].ljust(10), '='.ljust(10), counter[i])
+                    to6 = str(numbers[i].ljust(10)) + '='.ljust(10) + str(counter[i])
+                    to_output2.append(to6)
+                window = answer(to_output2)
             if c == 6:
                 n = n.split()
                 m = sort_list(n)
-                print('Упорядоченный ряд: ', *n, ' = ', *m)
+                to5 = 'Упорядоченный ряд: '
+                for i in n:
+                    to5 += str(i)
+                    to5 += ' '
+                to5 += '= '
+                for i in m:
+                    to5 += str(i)
+                    to5 += ' '
+                to_output2.append(to5)
+                window = answer(to_output2)
             if c == 7:
                 qw = n.split()
                 b = qw[:]
-                print(b)
                 dek = sort_list(b)
-                print(b)
                 b = dek.copy()
                 if len(b) % 2 == 0:
                     b = dek[:]
@@ -325,42 +339,73 @@ def calculator_to_ViS():
                     second += str(c8 / 2)
                     first += ' ' * (len(second) - len(first))
                     third += ' ' * (len(second) - len(third))
-                    print(first, second, third, sep='\n')
-                else:
+                    to_output2.append(first)
+                    to_output2.append(second)
+                    to_output2.append(third)
+                elif len(b) % 2 == 1 and len(b) > 2:
                     while len(b) != 1:
                         del b[0]
                         del b[-1]
                     q8 = sorted(qw)
-                    print(f'Медиана списка  = ', *qw, ' = ', *q8, ' = ', b[0])
+                    to3 = 'Медиана списка = '
+                    for i in qw:
+                        to3 += str(i)
+                        to3 += ' '
+
+                    to3 += '= '
+                    for i in q8:
+                        to3 += str(i)
+                        to3 += ' '
+
+                    to3 += '= '
+                    to3 += str(b[0])
+                    to_output2.append(to3)
+                elif len(b) == 1:
+                    to4 = 'Медиана списка  = ' + str(b[0])
+                    to_output2.append(to4)
+                else:
+                    to_output2.append('Медианы нет! Введите еще одно число!')
+                window = answer(to_output2)
             if c == 8:
                 n = n.split()
                 n = sort_list(n)
                 numbers2 = n
                 first = second = third = ''
                 second += 'Среднее арифметическое ряда = '
-                first = third = ' ' * 29
-                w = '-' * max(len(str(sum(numbers2))), len(str(len(numbers2))))
+                first = third = '  ' * 26
+                w = '--' * max(len(str(sum(numbers2))), len(str(len(numbers2))))
                 second += str(w)
                 first += ' '
-                third += ' ' * (len(w) // 2 + 1)
+                third += ' ' * (len(w) // 2)
                 first += str(sum(numbers2))
                 third += str(len(numbers2))
                 second += ' = '
                 second += str(sum(numbers2) / len(numbers2))
+                second += ' '
                 first += ' ' * (len(second) - len(first))
                 third += ' ' * (len(second) - len(third))
-                print(first, second, third, sep='\n')
+                to_output2.append(first)
+                to_output2.append(second)
+                to_output2.append(third)
+                window = answer(to_output2)
             if c == 9:
-                numbers = []
                 n = n.split()
-                for e in n:
-                    numbers.append(int(e))
+                numbers = sort_list(n)
                 if len(numbers) > 1:
-                    c2 = max(numbers)
-                    v = min(numbers)
-                    print(f'Размах: {c2 - v}')
+                    to = 'Размах: '
+                    for i in numbers:
+                        to += str(i)
+                        to += ' '
+                    to += '= '
+                    to += str(max(numbers))
+                    to += ' - '
+                    to += str(min(numbers))
+                    to += ' = '
+                    to += str(max(numbers) - min(numbers))
+                    to_output2.append(to)
                 else:
-                    print('Размах: ', *numbers)
+                    to_output2.append('Вы ввели одно число!')
+                window = answer(to_output2)
         delete_from_screen_ViS_when_you_tap_answer()
 
     def new_button():
@@ -396,6 +441,8 @@ def calculator_to_ViS():
         delete_from_screen_ViS_when_you_tap_the_button()
         to_output = []
         name = Entry(window, font='Helvetica 15')
+        name.insert(0,"Факториал числа: ")
+        name.bind("<Button-1>", clear_search)
         name.place(x=50, y=300, width=500, height=50)
         to_output.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name)
@@ -427,12 +474,16 @@ def calculator_to_ViS():
         delete_from_screen_ViS_when_you_tap_the_button()
         to_output = []
         name = Entry(window, font="Helvetica 15")
+        name.insert(0,"k: ")
+        name.bind("<Button-1>", clear_search)
         to_delete_all_to_go_first_screen.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_answer.append(name)
         name.place(x=80, y=240, width=500, height=50)
         to_output.append(name)
         name1 = Entry(window, font="Helvetica 15")
+        name1.insert(0,"n: ")
+        name1.bind("<Button-1>", clear_search2)
         to_delete_all_to_go_first_screen.append(name1)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name1)
         to_delete_from_screen_ViS_when_you_tap_the_answer.append(name1)
@@ -459,12 +510,16 @@ def calculator_to_ViS():
         delete_from_screen_ViS_when_you_tap_the_button()
         to_output = []
         name = Entry(window, font="Helvetica 15")
+        name.insert(0,"k: ")
+        name.bind("<Button-1>", clear_search)
         to_delete_all_to_go_first_screen.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_answer.append(name)
         name.place(x=80, y=240, width=500, height=50)
         to_output.append(name)
         name1 = Entry(window, font="Helvetica 15")
+        name1.insert(0,"n: ")
+        name1.bind("<Button-1>", clear_search2)
         to_delete_all_to_go_first_screen.append(name1)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name1)
         to_delete_from_screen_ViS_when_you_tap_the_answer.append(name1)
@@ -506,43 +561,49 @@ def calculator_to_ViS():
     def MODA():
         global c
         c = 4
-        print(c)
         work_with_list()
+        name.insert(0, "Мода списка: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def counter_of_digits():
         global c
         c = 5
-        print(c)
         work_with_list()
+        name.insert(0, "Количество чисел: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def sort_list():
         global c
         c = 6
-        print(c)
         work_with_list()
+        name.insert(0, "Отсортировать список: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def MED():
         global c
         c = 7
-        print(c)
         work_with_list()
+        name.insert(0, "Медиана ряда: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def average_arithmetic():
         global c
         c = 8
-        print(c)
         work_with_list()
+        name.insert(0, "Среднее арифметическое ряда: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def SCOPE():
         global c
         c = 9
-        print(c)
         work_with_list()
+        name.insert(0, "Размах: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def on_main_screen():

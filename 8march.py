@@ -4,6 +4,12 @@ from tkinter import ttk
 
 from math import *
 
+def clear_search(event):
+   name.delete(0, END)
+
+def clear_search2(event):
+   name1.delete(0, END)
+
 to_delete_from_first_screen = []
 to_delete_from_screen_ViS_when_you_tap_the_button = []
 to_delete_from_screen_ViS_when_you_tap_the_answer = []
@@ -435,6 +441,8 @@ def calculator_to_ViS():
         delete_from_screen_ViS_when_you_tap_the_button()
         to_output = []
         name = Entry(window, font='Helvetica 15')
+        name.insert(0,"Факториал числа: ")
+        name.bind("<Button-1>", clear_search)
         name.place(x=50, y=300, width=500, height=50)
         to_output.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name)
@@ -466,12 +474,16 @@ def calculator_to_ViS():
         delete_from_screen_ViS_when_you_tap_the_button()
         to_output = []
         name = Entry(window, font="Helvetica 15")
+        name.insert(0,"k: ")
+        name.bind("<Button-1>", clear_search)
         to_delete_all_to_go_first_screen.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_answer.append(name)
         name.place(x=80, y=240, width=500, height=50)
         to_output.append(name)
         name1 = Entry(window, font="Helvetica 15")
+        name1.insert(0,"n: ")
+        name1.bind("<Button-1>", clear_search2)
         to_delete_all_to_go_first_screen.append(name1)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name1)
         to_delete_from_screen_ViS_when_you_tap_the_answer.append(name1)
@@ -498,12 +510,16 @@ def calculator_to_ViS():
         delete_from_screen_ViS_when_you_tap_the_button()
         to_output = []
         name = Entry(window, font="Helvetica 15")
+        name.insert(0,"k: ")
+        name.bind("<Button-1>", clear_search)
         to_delete_all_to_go_first_screen.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name)
         to_delete_from_screen_ViS_when_you_tap_the_answer.append(name)
         name.place(x=80, y=240, width=500, height=50)
         to_output.append(name)
         name1 = Entry(window, font="Helvetica 15")
+        name1.insert(0,"n: ")
+        name1.bind("<Button-1>", clear_search2)
         to_delete_all_to_go_first_screen.append(name1)
         to_delete_from_screen_ViS_when_you_tap_the_button.append(name1)
         to_delete_from_screen_ViS_when_you_tap_the_answer.append(name1)
@@ -546,36 +562,48 @@ def calculator_to_ViS():
         global c
         c = 4
         work_with_list()
+        name.insert(0, "Мода списка: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def counter_of_digits():
         global c
         c = 5
         work_with_list()
+        name.insert(0, "Количество чисел: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def sort_list():
         global c
         c = 6
         work_with_list()
+        name.insert(0, "Отсортировать список: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def MED():
         global c
         c = 7
         work_with_list()
+        name.insert(0, "Медиана ряда: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def average_arithmetic():
         global c
         c = 8
         work_with_list()
+        name.insert(0, "Среднее арифметическое ряда: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def SCOPE():
         global c
         c = 9
         work_with_list()
+        name.insert(0, "Размах: ")
+        name.bind("<Button-1>", clear_search)
         return window
 
     def on_main_screen():
