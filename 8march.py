@@ -84,6 +84,11 @@ def need_button_2():
 
 
 def calculator_to_ViS():
+    global window
+    w = 610
+    h = 600
+    window.geometry(f'{w}x{h}+300+170')
+
     window = delete_from_fist_screen()
 
     def delete_text():
@@ -694,6 +699,10 @@ def calculator_to_ViS():
 def calculator():
     global window
 
+    w = 610
+    h = 600
+    window.geometry(f'{w}x{h}+300+170')
+
     window = delete_from_fist_screen()
 
     def on_main_screen():
@@ -852,7 +861,9 @@ def calculator():
 def first_screen():
     global window
     window.title('Калькулятор ВиС')
-    window.geometry('610x600+300+170')
+    w = 610
+    h = 600
+    window.geometry(f'{w}x{h}+300+170')
     window.configure(bg='#CC99FF')
     photo = PhotoImage(file='new.png')
     window.iconphoto(False, photo)
