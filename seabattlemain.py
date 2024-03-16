@@ -106,8 +106,8 @@ def first_chance(matrix, r, c):
                     matrix[matrix.index('1') - 1] = '1'
     return matrix
 
+
 def second_chance(matrix, r, c):
-    matrix[r][c] = '1'
     list1 = []
     for i in range(12):
         list1.append(matrix[i][c])
@@ -115,7 +115,9 @@ def second_chance(matrix, r, c):
     list1 = first_chance(list1, r, c2)
     for i in range(12):
         matrix[i][c] = list1[i]
+    print(matrix)
     return matrix
+
 
 def need_button_2():
     global window
@@ -125,6 +127,45 @@ def need_button_2():
     to_delete_from_first_screen.append(buton7)
     return window
 
+
+def limitation1(matrix, r, c, first_or_second):
+    if first_or_second == 'first':
+        a = matrix[r].index('1') - 1
+        b = ''.join(matrix[r]).rfind('1') + 1
+        matrix[r][a] = '0'
+        matrix[r][b] = '0'
+        for i in range(a, b + 1):
+            matrix[r - 1][i] = '0'
+            matrix[r + 1][i] = '0'
+    elif first_or_second == 'second':
+        a = matrix[c].index('1') - 1
+        b = ''.join(matrix[c]).rfind('1') + 1
+        matrix[c][a] = '0'
+        matrix[c][b] = '0'
+        for i in range(a, b + 1):
+            matrix[c - 1][i] = '0'
+            matrix[c + 1][i] = '0'
+    return matrix
+
+
+def limitation2(matrix, r, c):
+    matrix2 = []
+    for i in range(12):
+        listnd = []
+        for j in range(12):
+            listnd.append(matrix[j][i])
+        matrix2.append(listnd[::-1])
+    first_or_second = 'second'
+    matrix2 = limitation1(matrix2, r, c, first_or_second)
+    matrix3 = []
+    for i in range(12):
+        listnd2 = []
+        for j in range(12):
+            listnd2.append(matrix2[j][i])
+        matrix3.append(listnd2)
+    matrix = matrix3
+    matrix = matrix[::-1]
+    return matrix
 
 def sea_battle():
     global window
@@ -147,16 +188,17 @@ def sea_battle():
 
         def largest_ship(matrix):
             chance = randint(1, 2)
+            r = randint(1, 10)
+            c = randint(1, 10)
+            print(f'r = {r}, c = {c}, chance = {chance}')
+            matrix[r][c] = '1'
             if chance == 1:
-                r = randint(1, 10)
-                c = randint(1, 10)
-                matrix[r][c] = '1'
                 matrix[r] = first_chance(matrix[r], r, c)
+                first_or_second = 'first'
+                matrix = limitation1(matrix, r, c, first_or_second)
             else:
-                r = randint(1, 10)
-                c = randint(1, 10)
-                print(r, c)
                 matrix = second_chance(matrix, r, c)
+                matrix = limitation2(matrix, r, c)
             return matrix
         matrix = largest_ship(matrix)
         return matrix
