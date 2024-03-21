@@ -1,0 +1,227 @@
+from random import *
+
+def make_matrix(height, width):
+    matrix = [[' ' for j in range(width)] for i in range(height)]
+    for i in range(height):
+        matrix[i][0] = '0'
+        matrix[i][-1] = '0'
+    for j in range(width):
+        matrix[0][j] = '0'
+        matrix[-1][j] = '0'
+    return matrix
+
+
+list_to_insert = ['0']
+
+
+def first_chance(matrix, r, c, lenght, to_insert):
+    if str(c) in '3456':
+        counter = lenght - 1
+        while counter != 0:
+            if matrix[matrix.index(to_insert) - 1] == ' ' and matrix[''.join(matrix).rfind(to_insert) + 1] == ' ':
+                to = choice([matrix.index(to_insert) - 1, ''.join(matrix).rfind(to_insert) + 1])
+                if matrix[to] not in list_to_insert:
+                    matrix[to] = to_insert
+                    counter -= 1
+
+    else:
+        if c < 3:
+            counter = lenght - 1
+            list1 = []
+            while matrix.index(to_insert) - 1 > 0 and matrix[matrix.index(to_insert) - 1] == ' ' and counter != 0:
+                to = choice([matrix.index(to_insert) - 1, ''.join(matrix).rindex(to_insert) + 1])
+                print(to)
+                if abs(to) not in list1:
+                    matrix[abs(to)] = to_insert
+                    counter -= 1
+                list1.append(abs(to))
+            if counter != 0:
+                for i in range(counter):
+                    matrix[''.join(matrix).rfind(to_insert) + 1] = to_insert
+        elif c > 6:
+            counter = lenght - 1
+            list1 = []
+            while ''.join(matrix).rindex(to_insert) + 1 < 10 and matrix[''.join(matrix).rindex(to_insert) + 1] == ' ' and counter != 0:
+                to = choice([matrix.index(to_insert) - 1, ''.join(matrix).rindex(to_insert) + 1])
+                print(to)
+                if abs(to) not in list1:
+                    matrix[abs(to)] = to_insert
+                    counter -= 1
+                list1.append(abs(to))
+            if counter != 0:
+                for i in range(counter):
+                    matrix[matrix.index(to_insert) - 1] = to_insert
+    return matrix
+
+
+def second_chance(matrix, r, c, lenght, to_insert):
+    list1 = []
+    for i in range(12):
+        list1.append(matrix[i][c])
+    c2 = list1.index(to_insert)
+    list1 = first_chance(list1, r, c2, lenght, to_insert)
+    for i in range(12):
+        matrix[i][c] = list1[i]
+    return matrix
+
+def limitation1(matrix, r, c, first_or_second, to_insert):
+    if first_or_second == 'first':
+        a = matrix[r].index(to_insert) - 1
+        b = ''.join(matrix[r]).rfind(to_insert) + 1
+        matrix[r][a] = '0'
+        matrix[r][b] = '0'
+        for i in range(a, b + 1):
+            matrix[r - 1][i] = '0'
+            matrix[r + 1][i] = '0'
+    elif first_or_second == 'second':
+        a = matrix[c].index(to_insert) - 1
+        b = ''.join(matrix[c]).rfind(to_insert) + 1
+        matrix[c][a] = '0'
+        matrix[c][b] = '0'
+        for i in range(a, b + 1):
+            matrix[c - 1][i] = '0'
+            matrix[c + 1][i] = '0'
+    return matrix
+
+
+def limitation2(matrix, r, c, to_insert):
+    matrix2 = []
+    for i in range(12):
+        listnd = []
+        for j in range(12):
+            listnd.append(matrix[j][i])
+        listnd = listnd[::-1]
+        matrix2.append(listnd)
+    first_or_second = 'second'
+    matrix2 = limitation1(matrix2, r, c, first_or_second, to_insert)
+    matrix3 = []
+    for i in range(12):
+        listnd2 = []
+        for j in range(12):
+            listnd2.append(matrix2[j][i])
+        matrix3.append(listnd2)
+    matrix = matrix3
+    matrix = matrix[::-1]
+    return matrix
+
+
+def sea_battle():
+
+    def matrix():
+        matrix = make_matrix(12, 12)
+
+        def fourth_ship(matrix, to_insert):
+            chance = randint(1, 2)
+            r = randint(1, 10)
+            c = randint(1, 10)
+            lenght = 4
+            print(f'r = {r}, c = {c}, chance = {chance}')
+            matrix[r][c] = to_insert
+            if chance == 1:
+                matrix[r] = first_chance(matrix[r], r, c, lenght, to_insert)
+                first_or_second = 'first'
+                matrix = limitation1(matrix, r, c, first_or_second, to_insert)
+            else:
+                matrix = second_chance(matrix, r, c, lenght, to_insert)
+                matrix = limitation2(matrix, r, c, to_insert)
+            return matrix
+
+        def third_ship(matrix, to_insert):
+            r = randint(1, 10)
+            c = randint(1, 10)
+            lenght = 3
+            while matrix[r][c] != ' ':
+                r = randint(1, 10)
+                c = randint(1, 10)
+            matrix[r][c] = to_insert
+            # if matrix[r][c + 1] == ' ' and matrix[r][c + 2] == ' ' and matrix[r][c - 1] == ' ' and matrix[r][c - 2] == ' ' and matrix[r + 1][c] == ' ' and matrix[r + 2][c] == ' ' and matrix[r - 1][c] == ' ' and matrix[r - 2][c] == ' ':
+            chance = randint(1, 2)
+            if chance == 1:
+                matrix[r] = first_chance(matrix[r], r, c, lenght, to_insert)
+                first_or_second = 'first'
+                matrix = limitation1(matrix, r, c, first_or_second, to_insert)
+            elif chance == 2:
+                matrix = second_chance(matrix, r, c, lenght, to_insert)
+                matrix = limitation2(matrix, r, c, to_insert)
+            return matrix
+
+        def second_ship(matrix, to_insert):
+            r = randint(1, 10)
+            c = randint(1, 10)
+            lenght = 2
+            while matrix[r][c] != ' ':
+                r = randint(1, 10)
+                c = randint(1, 10)
+            matrix[r][c] = to_insert
+            # if matrix[r][c + 1] == ' ' and matrix[r][c + 2] == ' ' and matrix[r][c - 1] == ' ' and matrix[r][c - 2] == ' ' and matrix[r + 1][c] == ' ' and matrix[r + 2][c] == ' ' and matrix[r - 1][c] == ' ' and matrix[r - 2][c] == ' ':
+            chance = randint(1, 2)
+            if chance == 1:
+                matrix[r] = first_chance(matrix[r], r, c, lenght, to_insert)
+                first_or_second = 'first'
+                matrix = limitation1(matrix, r, c, first_or_second, to_insert)
+            elif chance == 2:
+                matrix = second_chance(matrix, r, c, lenght, to_insert)
+                matrix = limitation2(matrix, r, c, to_insert)
+            # else:
+            #     if ...:
+            #         pass
+            #     elif ...:
+            #         pass
+            return matrix
+
+
+        def first_ship(matrix, to_insert):
+            r = randint(1, 10)
+            c = randint(1, 10)
+            lenght = 1
+            while matrix[r][c] != ' ':
+                r = randint(1, 10)
+                c = randint(1, 10)
+            matrix[r][c] = to_insert
+            # if matrix[r][c + 1] == ' ' and matrix[r][c + 2] == ' ' and matrix[r][c - 1] == ' ' and matrix[r][c - 2] == ' ' and matrix[r + 1][c] == ' ' and matrix[r + 2][c] == ' ' and matrix[r - 1][c] == ' ' and matrix[r - 2][c] == ' ':
+            chance = randint(1, 2)
+            if chance == 1:
+                matrix[r] = first_chance(matrix[r], r, c, lenght, to_insert)
+                first_or_second = 'first'
+                matrix = limitation1(matrix, r, c, first_or_second, to_insert)
+            elif chance == 2:
+                matrix = second_chance(matrix, r, c, lenght, to_insert)
+                matrix = limitation2(matrix, r, c, to_insert)
+            # else:
+            #     if ...:
+            #         pass
+            #     elif ...:
+            #         pass
+            return matrix
+
+        matrix = fourth_ship(matrix, '1')
+        list_to_insert.append('1')
+
+        matrix = third_ship(matrix, '2')
+        list_to_insert.append('2')
+        matrix = third_ship(matrix, '3')
+        list_to_insert.append('3')
+
+        matrix = second_ship(matrix, '4')
+        list_to_insert.append('4')
+        matrix = second_ship(matrix, '5')
+        list_to_insert.append('5')
+        matrix = second_ship(matrix, '6')
+        list_to_insert.append('6')
+
+        matrix = first_ship(matrix, '7')
+        list_to_insert.append('7')
+        matrix = first_ship(matrix, '8')
+        list_to_insert.append('8')
+        matrix = first_ship(matrix, '9')
+        list_to_insert.append('9')
+        matrix = first_ship(matrix, '10')
+        list_to_insert.append('10')
+
+        return matrix
+
+    matrix = matrix()
+    return matrix
+
+matrix = sea_battle()
+print(*matrix, sep='\n')
