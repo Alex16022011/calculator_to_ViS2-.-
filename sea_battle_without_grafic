@@ -221,6 +221,13 @@ def sea_battle():
         return matrix
 
     matrix = matrix()
+    for i in range(12):
+    	for j in range(12):
+    		if matrix[i][j] == ' ':
+    			matrix[i][j] = '0'
+    		if matrix[i][j] not in '01 ':
+    			matrix[i][j] = '1'
+    	
     return matrix
 
 matrix = sea_battle()
